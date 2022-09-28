@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EducationNetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="E-mail" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassSchedule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Img" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CourseClassification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Content" Type="text" Nullable="false" />
+          <Property Name="CreateTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InfoCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="QQ" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="E-mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentWorks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentWorksCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClassSchedule_CourseClassification">
+          <End Role="CourseClassification" Type="Self.CourseClassification" Multiplicity="1" />
+          <End Role="ClassSchedule" Type="Self.ClassSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseClassification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClassSchedule">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Info_InfoCategory">
+          <End Role="InfoCategory" Type="Self.InfoCategory" Multiplicity="1" />
+          <End Role="Info" Type="Self.Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentWorks_StudentWorksCategory">
+          <End Role="StudentWorksCategory" Type="Self.StudentWorksCategory" Multiplicity="1" />
+          <End Role="StudentWorks" Type="Self.StudentWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentWorksCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentWorks">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EducationNetworkModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassSchedule" EntityType="Self.ClassSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseClassification" EntityType="Self.CourseClassification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Info" EntityType="Self.Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InfoCategory" EntityType="Self.InfoCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentWorks" EntityType="Self.StudentWorks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentWorksCategory" EntityType="Self.StudentWorksCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ClassSchedule_CourseClassification" Association="Self.FK_ClassSchedule_CourseClassification">
+            <End Role="CourseClassification" EntitySet="CourseClassification" />
+            <End Role="ClassSchedule" EntitySet="ClassSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_InfoCategory" Association="Self.FK_Info_InfoCategory">
+            <End Role="InfoCategory" EntitySet="InfoCategory" />
+            <End Role="Info" EntitySet="Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentWorks_StudentWorksCategory" Association="Self.FK_StudentWorks_StudentWorksCategory">
+            <End Role="StudentWorksCategory" EntitySet="StudentWorksCategory" />
+            <End Role="StudentWorks" EntitySet="StudentWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Subject" Association="Self.FK_Teacher_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EducationNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Message1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentWorks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Img" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StudentWorksCategory" Relationship="Self.FK_StudentWorks_StudentWorksCategory" FromRole="StudentWorks" ToRole="StudentWorksCategory" />
+        </EntityType>
+        <EntityType Name="StudentWorksCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StudentWorks" Relationship="Self.FK_StudentWorks_StudentWorksCategory" FromRole="StudentWorksCategory" ToRole="StudentWorks" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher_Subject" FromRole="Subject" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_Teacher_Subject" FromRole="Teacher" ToRole="Subject" />
+        </EntityType>
+        <Association Name="FK_StudentWorks_StudentWorksCategory">
+          <End Role="StudentWorksCategory" Type="Self.StudentWorksCategory" Multiplicity="1" />
+          <End Role="StudentWorks" Type="Self.StudentWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentWorksCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentWorks">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EducationNetworkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admins" />
+          <EntitySet Name="Message" EntityType="Self.Message" />
+          <EntitySet Name="StudentWorks" EntityType="Self.StudentWorks" />
+          <EntitySet Name="StudentWorksCategory" EntityType="Self.StudentWorksCategory" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
+          <AssociationSet Name="FK_StudentWorks_StudentWorksCategory" Association="Self.FK_StudentWorks_StudentWorksCategory">
+            <End Role="StudentWorksCategory" EntitySet="StudentWorksCategory" />
+            <End Role="StudentWorks" EntitySet="StudentWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Subject" Association="Self.FK_Teacher_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+          <EntitySet Name="Info" EntityType="EducationNetworkModel.Info" />
+          <EntitySet Name="InfoCategory" EntityType="EducationNetworkModel.InfoCategory" />
+          <AssociationSet Name="FK_Info_InfoCategory" Association="EducationNetworkModel.FK_Info_InfoCategory">
+            <End Role="InfoCategory" EntitySet="InfoCategory" />
+            <End Role="Info" EntitySet="Info" />
+          </AssociationSet>
+          <EntitySet Name="ClassSchedule" EntityType="EducationNetworkModel.ClassSchedule" />
+          <EntitySet Name="CourseClassification" EntityType="EducationNetworkModel.CourseClassification" />
+          <AssociationSet Name="FK_ClassSchedule_CourseClassification" Association="EducationNetworkModel.FK_ClassSchedule_CourseClassification">
+            <End Role="CourseClassification" EntitySet="CourseClassification" />
+            <End Role="ClassSchedule" EntitySet="ClassSchedule" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InfoCategory" Relationship="EducationNetworkModel.FK_Info_InfoCategory" FromRole="Info" ToRole="InfoCategory" />
+        </EntityType>
+        <EntityType Name="InfoCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Info" Relationship="EducationNetworkModel.FK_Info_InfoCategory" FromRole="InfoCategory" ToRole="Info" />
+        </EntityType>
+        <Association Name="FK_Info_InfoCategory">
+          <End Type="EducationNetworkModel.InfoCategory" Role="InfoCategory" Multiplicity="1" />
+          <End Type="EducationNetworkModel.Info" Role="Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClassSchedule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Describe" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CourseClassification" Relationship="EducationNetworkModel.FK_ClassSchedule_CourseClassification" FromRole="ClassSchedule" ToRole="CourseClassification" />
+        </EntityType>
+        <EntityType Name="CourseClassification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassSchedule" Relationship="EducationNetworkModel.FK_ClassSchedule_CourseClassification" FromRole="CourseClassification" ToRole="ClassSchedule" />
+        </EntityType>
+        <Association Name="FK_ClassSchedule_CourseClassification">
+          <End Type="EducationNetworkModel.CourseClassification" Role="CourseClassification" Multiplicity="1" />
+          <End Type="EducationNetworkModel.ClassSchedule" Role="ClassSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseClassification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClassSchedule">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EducationNetworkModelStoreContainer" CdmEntityContainer="EducationNetworkEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="EducationNetworkModel.Admins">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="EducationNetworkModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="QQ" ColumnName="QQ" />
+                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+                <ScalarProperty Name="Message1" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentWorks">
+            <EntityTypeMapping TypeName="EducationNetworkModel.StudentWorks">
+              <MappingFragment StoreEntitySet="StudentWorks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentWorksCategory">
+            <EntityTypeMapping TypeName="EducationNetworkModel.StudentWorksCategory">
+              <MappingFragment StoreEntitySet="StudentWorksCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subject">
+            <EntityTypeMapping TypeName="EducationNetworkModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="EducationNetworkModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Info">
+            <EntityTypeMapping TypeName="EducationNetworkModel.Info">
+              <MappingFragment StoreEntitySet="Info">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InfoCategory">
+            <EntityTypeMapping TypeName="EducationNetworkModel.InfoCategory">
+              <MappingFragment StoreEntitySet="InfoCategory">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassSchedule">
+            <EntityTypeMapping TypeName="EducationNetworkModel.ClassSchedule">
+              <MappingFragment StoreEntitySet="ClassSchedule">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseClassification">
+            <EntityTypeMapping TypeName="EducationNetworkModel.CourseClassification">
+              <MappingFragment StoreEntitySet="CourseClassification">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

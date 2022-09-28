@@ -1,0 +1,17 @@
+F:\EducationNetwork\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+F:\EducationNetwork\DAL\bin\Debug\DAL.dll
+F:\EducationNetwork\DAL\bin\Debug\DAL.pdb
+F:\EducationNetwork\DAL\bin\Debug\IDAL.dll
+F:\EducationNetwork\DAL\bin\Debug\Model.dll
+F:\EducationNetwork\DAL\bin\Debug\EntityFramework.dll
+F:\EducationNetwork\DAL\bin\Debug\IDAL.pdb
+F:\EducationNetwork\DAL\bin\Debug\Model.pdb
+F:\EducationNetwork\DAL\bin\Debug\Model.dll.config
+F:\EducationNetwork\DAL\bin\Debug\EntityFramework.xml
+F:\EducationNetwork\DAL\obj\Debug\DAL.csproj.CopyComplete
+F:\EducationNetwork\DAL\obj\Debug\DAL.dll
+F:\EducationNetwork\DAL\obj\Debug\DAL.pdb
+F:\EducationNetwork\DAL\bin\Debug\DAL.dll.config
+F:\EducationNetwork\DAL\bin\Debug\EntityFramework.SqlServer.dll
+F:\EducationNetwork\DAL\bin\Debug\EntityFramework.SqlServer.xml
+F:\EducationNetwork\DAL\obj\Debug\DAL.csprojAssemblyReference.cache

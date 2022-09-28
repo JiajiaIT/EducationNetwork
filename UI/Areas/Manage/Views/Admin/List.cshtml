@@ -1,0 +1,260 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>表格 - 光年(Light Year Admin V4)后台管理系统模板</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+    <meta name="author" content="yinqi">
+    <link href="~/Content/Manage/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/style.min.css" rel="stylesheet">
+    <script src="~/Content/Manage/layui/layui.js"></script>
+</head>
+
+<body>
+    <input hidden id="admindata" value="@ViewData["Admin"]" />
+    <input hidden id="name" value="@ViewData["Name"]" />
+    <div class="container-fluid p-t-15">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <header class="card-header"><div class="card-title"><input type="button" id="add" class="btn btn-success" name="name" data-toggle="modal" data-target="#exampleModalGrid" value="添加" /></div></header>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>昵称</th>
+                                        <th>手机</th>
+                                        <th>邮箱</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="exampleModalGrid" tabindex="-1" role="dialog" aria-labelledby="exampleModalGridTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalGridTitle">添加管理员</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="username">用户名</label>
+                                <input type="text" class="form-control" id="username" placeholder="请输入您的用户名" autocomplete="off" value="">
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="form-group">
+                                <label for="nickName">昵称</label>
+                                <input type="text" class="form-control" id="nickName" placeholder="请输入您的昵称" autocomplete="off" value="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <input type="password" class="form-control" id="password" placeholder="请输入密码" autocomplete="off" value="">
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="form-group">
+                                <label for="repeatpassword">确认密码</label>
+                                <input type="password" class="form-control" id="repeatpassword" placeholder="请确认密码" autocomplete="off" value="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="phone">手机</label>
+                                <input type="text" class="form-control" id="phone" placeholder="请输入您的手机号" autocomplete="off" value="">
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="form-group">
+                                <label for="e_mail">邮箱</label>
+                                <input type="text" class="form-control" id="e_mail" placeholder="请输入您的邮箱" autocomplete="off" value="">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="AddAdmin">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/jquery.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/popper.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="~/Content/Manage/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipient = button.data('whatever');
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient);
+        })
+    </script>
+
+</body>
+</html>
+<script>
+    var admindata = $("#admindata").val();
+    var adminlist = JSON.parse(admindata);
+    var tr = "";
+    var name = $("#name").val();
+    for (var i = 0; i < adminlist.length; i++) {
+        if (adminlist[i].UserName == name) {
+            continue;
+        }
+        tr += `<tr>
+                                        <th scope="row">${adminlist[i].ID}</th>
+                                        <td>${adminlist[i].UserName}</td>
+                                        <td>${adminlist[i].NickName}</td>
+                                        <td>${adminlist[i].Phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2")}</td>
+                                        <td>${adminlist[i].E_mail.replace(adminlist[i].E_mail.substring(3, 6), "****")}</td>
+                                        <td><input type="button" onclick="Delete(${adminlist[i].ID})" class="btn btn-danger btn-sm" value="删除" /></td>
+                                    </tr>`;
+
+    }
+    $("#tbody").html(tr);
+
+    $("#add").click(function () {
+        $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipient = button.data('whatever');
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient);
+        })
+    })
+    $("#AddAdmin").click(function () {
+        var username = $("#username").val();
+        var nickName = $("#nickName").val();
+        var password = $("#password").val();
+        var repeatpassword = $("#repeatpassword").val();
+        var phone = $("#phone").val();
+        var e_mail = $("#e_mail").val();
+        if (username.length <= 0) {
+            layer.msg('用户名不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        for (var i = 0; i < adminlist.length; i++) {
+            if (username == adminlist[i].UserName) {
+                layer.msg('该用户名已存在!', { icon: 2, time: 1000 });
+                return;
+            }
+            if (phone == adminlist[i].Phone) {
+                layer.msg('该手机号已有管理员注册!', { icon: 2, time: 1000 });
+                return;
+            }
+            if (e_mail == adminlist[i].E_mail) {
+                layer.msg('该邮箱已有管理员注册!', { icon: 2, time: 1000 });
+                return;
+            }
+        }
+        if (nickName.length <= 0) {
+            layer.msg('昵称不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (password.length<=0) {
+            layer.msg('密码不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (repeatpassword.length <= 0) {
+            layer.msg('确认密码不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (repeatpassword != password) {
+            layer.msg('两次密码输入的不一致!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (phone.length <= 0) {
+            layer.msg('手机号不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (phone.length !=11) {
+            layer.msg('手机号格式不正确!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (e_mail.length <= 0) {
+            layer.msg('邮箱不能为空!', { icon: 2, time: 1000 });
+            return;
+        }
+        if (e_mail.length <= 13) {
+            layer.msg('邮箱格式不正确!', { icon: 2, time: 1000 });
+            return;
+        }
+        var reg = RegExp("@@");
+        if (!e_mail.match(reg)) {
+            layer.msg('邮箱格式不正确!', { icon: 2, time: 1000 });
+            return;
+        }
+        var admin = {
+            username: username,
+            nickName: nickName,
+            password: password,
+            phone: phone,
+            e_mail: e_mail
+        }
+        $.post("/Manage/Admin/Add", admin, function (result) {
+            if (result>0) {
+                layer.msg('添加成功!', { icon: 1, time: 1000 });
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }
+            else {
+                layer.msg('添加失败,请联系管理员!', { icon: 2, time: 1000 });
+            }
+        })
+    })
+    function Delete(id) {
+        $.get("/Manage/Admin/Delete/" + id, function (result) {
+            if (result > 0) {
+                layer.msg('删除成功!', { icon: 1, time: 1000 });
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }
+            else {
+                layer.msg('删除失败,请联系管理员!', { icon: 2, time: 1000 });
+            }
+        })
+    }
+</script>

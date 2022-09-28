@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li><a href="#" id="time"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <a href="http://beian.miit.gov.cn/">鄂ICP备2022005388号-2</a>
+        </footer>
+    </div>
+    <div style="width:300px;margin:0 auto; padding:20px 0;">
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42112602000326" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="/Content/Img/备案图标.png" style="float:left;" /><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42112602000326号</p></a>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script>
+    setInterval(function () {
+        var time = new Date();
+        var year = time.getFullYear(); //获取年份
+        var month = time.getMonth() + 1; //获取月份
+        var day = time.getDate();  //获取日期
+        var hour = checkTime(time.getHours());  //获取时
+        var minite = checkTime(time.getMinutes()); //获取分
+        var second = checkTime(time.getSeconds()); //获取秒
+        /****当时、分、秒、小于10时，则添加0****/
+        function checkTime(i) {
+            if (i < 10) return "0" + i;
+            return i;
+        }
+        var box = document.getElementById("time");
+        box.innerHTML = year + "年" + month + "月" + day + "日 " + hour + ":" + minite + ":" + second;
+    }, 1000)
+</script>

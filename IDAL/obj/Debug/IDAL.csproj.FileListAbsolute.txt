@@ -1,0 +1,12 @@
+F:\EducationNetwork\IDAL\bin\Debug\IDAL.dll
+F:\EducationNetwork\IDAL\bin\Debug\IDAL.pdb
+F:\EducationNetwork\IDAL\obj\Debug\IDAL.csproj.CoreCompileInputs.cache
+F:\EducationNetwork\IDAL\obj\Debug\IDAL.dll
+F:\EducationNetwork\IDAL\obj\Debug\IDAL.pdb
+F:\EducationNetwork\IDAL\bin\Debug\Model.dll
+F:\EducationNetwork\IDAL\bin\Debug\EntityFramework.dll
+F:\EducationNetwork\IDAL\bin\Debug\Model.pdb
+F:\EducationNetwork\IDAL\bin\Debug\Model.dll.config
+F:\EducationNetwork\IDAL\bin\Debug\EntityFramework.xml
+F:\EducationNetwork\IDAL\obj\Debug\IDAL.csproj.CopyComplete
+F:\EducationNetwork\IDAL\obj\Debug\IDAL.csprojAssemblyReference.cache

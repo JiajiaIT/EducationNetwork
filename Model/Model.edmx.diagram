@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6c3f63b2b04a48fb8cdffa14f842a0a6" Name="Diagram1">
+        <EntityTypeShape EntityType="EducationNetworkModel.Admins" Width="1.5" PointX="9.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationNetworkModel.Message" Width="1.5" PointX="9.125" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationNetworkModel.StudentWorks" Width="1.5" PointX="2.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationNetworkModel.StudentWorksCategory" Width="1.5" PointX="0.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationNetworkModel.Subject" Width="1.5" PointX="0.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EducationNetworkModel.Teacher" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="EducationNetworkModel.FK_StudentWorks_StudentWorksCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="EducationNetworkModel.FK_Teacher_Subject" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EducationNetworkModel.Info" Width="1.5" PointX="6.875" PointY="0.5" />
+        <EntityTypeShape EntityType="EducationNetworkModel.InfoCategory" Width="1.5" PointX="4.625" PointY="0.75" />
+        <AssociationConnector Association="EducationNetworkModel.FK_Info_InfoCategory" />
+        <EntityTypeShape EntityType="EducationNetworkModel.ClassSchedule" Width="1.5" PointX="6.875" PointY="3.5" />
+        <EntityTypeShape EntityType="EducationNetworkModel.CourseClassification" Width="1.5" PointX="4.625" PointY="3.875" />
+        <AssociationConnector Association="EducationNetworkModel.FK_ClassSchedule_CourseClassification" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

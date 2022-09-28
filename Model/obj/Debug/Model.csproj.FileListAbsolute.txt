@@ -1,0 +1,12 @@
+F:\EducationNetwork\Model\bin\Debug\Model.dll.config
+F:\EducationNetwork\Model\bin\Debug\Model.dll
+F:\EducationNetwork\Model\bin\Debug\Model.pdb
+F:\EducationNetwork\Model\bin\Debug\EntityFramework.dll
+F:\EducationNetwork\Model\bin\Debug\EntityFramework.SqlServer.dll
+F:\EducationNetwork\Model\bin\Debug\EntityFramework.xml
+F:\EducationNetwork\Model\bin\Debug\EntityFramework.SqlServer.xml
+F:\EducationNetwork\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+F:\EducationNetwork\Model\obj\Debug\Model.csproj.CopyComplete
+F:\EducationNetwork\Model\obj\Debug\Model.dll
+F:\EducationNetwork\Model\obj\Debug\Model.pdb
+F:\EducationNetwork\Model\obj\Debug\Model.csprojAssemblyReference.cache

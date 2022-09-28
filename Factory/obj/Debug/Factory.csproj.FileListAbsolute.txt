@@ -1,0 +1,17 @@
+F:\EducationNetwork\Factory\bin\Debug\Factory.dll
+F:\EducationNetwork\Factory\bin\Debug\Factory.pdb
+F:\EducationNetwork\Factory\bin\Debug\DAL.dll
+F:\EducationNetwork\Factory\bin\Debug\IDAL.dll
+F:\EducationNetwork\Factory\bin\Debug\Model.dll
+F:\EducationNetwork\Factory\bin\Debug\EntityFramework.dll
+F:\EducationNetwork\Factory\bin\Debug\DAL.pdb
+F:\EducationNetwork\Factory\bin\Debug\DAL.dll.config
+F:\EducationNetwork\Factory\bin\Debug\IDAL.pdb
+F:\EducationNetwork\Factory\bin\Debug\Model.pdb
+F:\EducationNetwork\Factory\bin\Debug\Model.dll.config
+F:\EducationNetwork\Factory\bin\Debug\EntityFramework.xml
+F:\EducationNetwork\Factory\obj\Debug\Factory.csproj.CoreCompileInputs.cache
+F:\EducationNetwork\Factory\obj\Debug\Factory.csproj.CopyComplete
+F:\EducationNetwork\Factory\obj\Debug\Factory.dll
+F:\EducationNetwork\Factory\obj\Debug\Factory.pdb
+F:\EducationNetwork\Factory\obj\Debug\Factory.csprojAssemblyReference.cache
