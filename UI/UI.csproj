@@ -126,6 +126,7 @@
     <Compile Include="Areas\Manage\Controllers\ClassScheduleController.cs" />
     <Compile Include="Areas\Manage\Controllers\CourseClassificationController.cs" />
     <Compile Include="Areas\Manage\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Manage\Controllers\StudentWorksController.cs" />
     <Compile Include="Areas\Manage\ManageAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -411,6 +412,8 @@
     <Content Include="Content\Manage\layui\css\modules\layer\default\loading-2.gif" />
     <Content Include="Content\Manage\layui\font\iconfont.svg" />
     <Content Include="Content\Manage\layui\layui.js" />
+    <Content Include="Content\StudentWorksImg\ia_200000107.png" />
+    <Content Include="Content\StudentWorksImg\ia_200000127.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -474,6 +477,7 @@
     <Content Include="Areas\Manage\Views\ClassSchedule\List.cshtml" />
     <Content Include="Areas\Manage\Views\CourseClassification\List.cshtml" />
     <Content Include="Areas\Manage\Views\Message\List.cshtml" />
+    <Content Include="Areas\Manage\Views\StudentWorks\List.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

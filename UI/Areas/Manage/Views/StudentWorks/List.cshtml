@@ -1,0 +1,111 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>学员作品管理</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+    <meta name="author" content="yinqi">
+    <link href="~/Content/Manage/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/style.min.css" rel="stylesheet">
+    <script src="~/Content/Manage/layui/layui.js"></script>
+    <style>
+        #Img {
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <input hidden id="Data" value="@ViewData["Data"]" />
+    <div class="container-fluid p-t-15">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <header class="card-header"><div class="card-title"><input type="button" id="add" class="btn btn-success" name="name" data-toggle="modal" data-target="#exampleModalGrid" value="添加" /></div></header>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>编号</th>
+                                        <th>分类</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/jquery.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/popper.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="~/Content/Manage/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipient = button.data('whatever');
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient);
+        })
+    </script>
+
+</body>
+</html>
+<script>
+    var result = $("#Data").val();
+    var data = JSON.parse(result);
+    console.log(data)
+    var tr = "";
+    for (var i = 0; i < data.length; i++) {
+        tr += `<tr>
+                                        <th scope="row">${data[i].ID}</th>
+                                        <td><img  id="Img" src="/Content/StudentWorksImg/${data[i].Img}" /></td>
+                                        <td>${data[i].Category}</td>
+                                        <td><input type="button" onclick="Update(${data[i].ID})" class="btn btn-primary btn-sm" value="修改" />
+                                            <input type="button" onclick="Delete(${data[i].ID})" class="btn btn-danger btn-sm" value="删除" />
+                                        </td>
+                                    </tr>`;
+
+    }
+    $("#tbody").html(tr);
+
+    function Delete(id) {
+        $.get("/Manage/StudentWorks/Delete/" + id, function (result) {
+            if (result > 0) {
+                layer.msg('删除成功!', { icon: 1, time: 1000 });
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }
+            else {
+                layer.msg('删除失败,请联系管理员!', { icon: 2, time: 1000 });
+            }
+        })
+    }
+</script>
