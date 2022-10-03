@@ -16,6 +16,10 @@ namespace UI.Areas.Manage.Controllers
             var result = HttpHelper.HttpGet(Tools.ServerPath + "api/StudentWorks/List", "get");
             var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Result<object>>(result);
             ViewData["Data"] = data.Data;
+
+            var res = HttpHelper.HttpGet(Tools.ServerPath + "api/StudentWorksCategory/List", "get");
+            var category = Newtonsoft.Json.JsonConvert.DeserializeObject<Result<object>>(res);
+            ViewData["Category"] = category.Data;
             return View();
         }
         public ActionResult Delete(int id)
@@ -78,6 +82,52 @@ namespace UI.Areas.Manage.Controllers
                 }
             }
 
+        }
+        [HttpPost]
+        public ActionResult Add(string img, int categoryid)
+        {
+            var studentworks = new
+            {
+                Img = img,
+                CategoryID = categoryid
+            };
+            var result = HttpHelper.HttpPost(Tools.ServerPath + "api/StudentWorks/Add", "post", studentworks);
+            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Result<object>>(result);
+            if (data.Code == 200 && data.Message == "添加成功")
+            {
+                return Json(1, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            //获取学生作品详情
+            var result = HttpHelper.HttpGet(Tools.ServerPath + "api/StudentWorks/FindByID/" + id, "get");
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        public ActionResult Update(int id, string img, int categoryid)
+        {
+            var studentworks = new
+            {
+                Img = img,
+                CategoryID = categoryid
+            };
+            var result = HttpHelper.HttpPost(Tools.ServerPath + "api/StudentWorks/Update/" + id, "post", studentworks);
+            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Result<object>>(result);
+            if (data.Code == 200 && data.Message == "修改成功")
+            {
+                return Json(1, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

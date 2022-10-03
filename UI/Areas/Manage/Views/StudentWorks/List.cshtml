@@ -26,6 +26,7 @@
 
 <body>
     <input hidden id="Data" value="@ViewData["Data"]" />
+    <input hidden id="CategoryData" value="@ViewData["Category"]" />
     <div class="container-fluid p-t-15">
 
         <div class="row">
@@ -54,7 +55,9 @@
         </div>
 
     </div>
+    <div id="moda">
 
+    </div>
 
 
 
@@ -107,5 +110,150 @@
                 layer.msg('删除失败,请联系管理员!', { icon: 2, time: 1000 });
             }
         })
+    }
+    $("#add").click(function () {
+        model();
+        var categoryData = $("#CategoryData").val();
+        var res = JSON.parse(categoryData);
+        console.log(res)
+        var select = "";
+        for (var i = 0; i < res.length; i++) {
+            select += `<option value="${res[i].ID}">${res[i].CategoryName}</option>`
+        }
+        $("#category").append(select);
+        $('#exampleModalGrid').modal().show();
+        $("#submit").click(function () {
+            var file = $("#exampleFormControlFile1")[0].files[0];;
+            var formData = new FormData();
+            formData.append("crowd_file", $('#exampleFormControlFile1')[0].files[0]);//将获取到的图片文件值保存到formData对象中，是以键值对的形式保存的，crowd_file就是键，$('#fileUp')[0].files[0]就是值
+            $.ajax({
+                url: "/Manage/StudentWorks/SaveImg",//后台controller的请求路径
+                type: 'post',
+                dataType: "json",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    var img = data;
+                    var classSchedule = {
+                        Img: img,
+                        CategoryID: $("#category").val()
+                    };
+                    $.post("/Manage/StudentWorks/Add", classSchedule, function (result) {
+                        if (result > 0) {
+                            layer.msg('添加成功!', { icon: 1, time: 1000 });
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+                        }
+                        else {
+                            layer.msg('添加失败,请联系管理员!', { icon: 2, time: 1000 });
+                        }
+                    })
+
+
+                }
+            });
+        })
+    })
+
+    function Update(id) {
+        model();
+        $.get("/Manage/StudentWorks/Update/" + id, function (data) {
+            var json = JSON.parse(data);
+            console.log(json)
+
+            $("#submit").text("修改");
+            $("#exampleModalGridTitle").text("修改学员作品信息");
+            var categoryData = $("#CategoryData").val();
+            var res = JSON.parse(categoryData);
+            console.log(res)
+            var select = "";
+            for (var i = 0; i < res.length; i++) {
+                select += `<option value="${res[i].ID}" ${res[i].CategoryName == json.Data.Category ? "selected" : ""}>${res[i].CategoryName}</option>`
+            }
+            $("#category").append(select);
+            $('#exampleModalGrid').modal().show();
+            $("#submit").click(function () {
+                var file = $("#exampleFormControlFile1")[0].files[0];
+                var formData = new FormData();
+                formData.append("crowd_file", $("#exampleFormControlFile1")[0].files[0]);//将获取到的图片文件值保存到formData对象中，是以键值对的形式保存的，crowd_file就是键，$('#fileUp')[0].files[0]就是值
+                $.ajax({
+                    url: "/Manage/StudentWorks/SaveImg",//后台controller的请求路径
+                    type: 'post',
+                    dataType: "json",
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (imgname) {
+                        var stuworks = {
+                            ID: id,
+                            Img: imgname,
+                            CategoryID: $("#category").val()
+                        };
+                        $.post("/Manage/StudentWorks/Update/" + id, stuworks, function (result) {
+                            if (result > 0) {
+                                layer.msg('修改成功!', { icon: 1, time: 1000 });
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000)
+                            }
+                            else {
+                                layer.msg('修改失败,请联系管理员!', { icon: 2, time: 1000 });
+                            }
+                        })
+
+
+                    }
+                });
+            })
+
+
+
+
+
+        })
+    }
+
+
+
+    function model() {
+        var md = `<div class="modal fade" id="exampleModalGrid" tabindex="-1" role="dialog" aria-labelledby="exampleModalGridTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalGridTitle">添加学员作品</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                                <div class="form-group">
+                                <label for="exampleFormControlFile1">上传学生作品</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+                             <div class="form-group">
+                                <label for="category">学生作品分类</label>
+                                <select id="category" class="form-control">
+
+                                </select>
+                             </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>`;
+        $("#moda").html(md);
     }
 </script>
