@@ -15,5 +15,6 @@ namespace UI.Models
         public static string ServerPath = ConfigurationManager.AppSettings["ServerPath"].ToString();
         public static string ClassScheduleImg = ConfigurationManager.AppSettings["ClassScheduleImg"].ToString();
         public static string StudentWorksImg = ConfigurationManager.AppSettings["StudentWorksImg"].ToString();
+        public static string TeacherImg = ConfigurationManager.AppSettings["TeacherImg"].ToString();
     }
 }

@@ -47,7 +47,7 @@ namespace UI.Areas.Manage.Controllers
                 var exname = Path.GetExtension(file.FileName).ToLower();
 
                 //0、验证一下上传文件（大小）
-                if (file.ContentLength <= 1024 * 1024 * 2)
+                if (file.ContentLength <= 1024 * 1024 * 20)
                 {
                     ///后缀
                     if (exname == ".jpg" || exname == ".jpeg" || exname == ".png" || exname == ".bmp" || exname == ".gif")

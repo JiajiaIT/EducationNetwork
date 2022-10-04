@@ -1,0 +1,282 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>教师管理</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+    <meta name="author" content="yinqi">
+    <link href="~/Content/Manage/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/style.min.css" rel="stylesheet">
+    <script src="~/Content/Manage/layui/layui.js"></script>
+    <style>
+        #Describe {
+            width: 100px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        #Img {
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <input hidden id="Data" value="@ViewData["Data"]" />
+    <input hidden id="CategoryData" value="@ViewData["Category"]" />
+    <div class="container-fluid p-t-15">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <header class="card-header"><div class="card-title"><input type="button" id="add" class="btn btn-success" name="name" data-toggle="modal" data-target="#exampleModalGrid" value="添加" /></div></header>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>姓名</th>
+                                        <th>图片</th>
+                                        <th>描述</th>
+                                        <th>科目</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="moda">
+
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/jquery.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/popper.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="~/Content/Manage/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipient = button.data('whatever');
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient);
+        })
+    </script>
+
+</body>
+</html>
+<script>
+    var result = $("#Data").val();
+    var data = JSON.parse(result);
+    console.log(data)
+    var tr = "";
+    for (var i = 0; i < data.length; i++) {
+        tr += `<tr>
+                                        <th scope="row">${data[i].ID}</th>
+                                        <td>${data[i].Name}</td>
+                                        <td><img  id="Img" src="/Content/TeacherImg/${data[i].Img}" /></td>
+                                        <td><p id="Describe">${data[i].Describe}</p></td>
+                                        <td>${data[i].Subject}</td>
+                                        <td><input type="button" onclick="Update(${data[i].ID})" class="btn btn-primary btn-sm" value="修改" />
+                                            <input type="button" onclick="Delete(${data[i].ID})" class="btn btn-danger btn-sm" value="删除" />
+                                        </td>
+                                    </tr>`;
+
+    }
+    $("#tbody").html(tr);
+
+    function Delete(id) {
+        $.get("/Manage/Teacher/Delete/" + id, function (result) {
+            if (result > 0) {
+                layer.msg('删除成功!', { icon: 1, time: 1000 });
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }
+            else {
+                layer.msg('删除失败,请联系管理员!', { icon: 2, time: 1000 });
+            }
+        })
+    }
+    $("#add").click(function () {
+        model();
+        var categoryData = $("#CategoryData").val();
+        var res = JSON.parse(categoryData);
+        console.log(res)
+        var select = "";
+        for (var i = 0; i < res.length; i++) {
+            select += `<option value="${res[i].ID}">${res[i].SubjectName}</option>`
+        }
+        $("#category").append(select);
+        $('#exampleModalGrid').modal().show();
+        $("#submit").click(function () {
+            var file = $("#exampleFormControlFile1")[0].files[0];;
+            var formData = new FormData();
+            formData.append("crowd_file", $('#exampleFormControlFile1')[0].files[0]);//将获取到的图片文件值保存到formData对象中，是以键值对的形式保存的，crowd_file就是键，$('#fileUp')[0].files[0]就是值
+            $.ajax({
+                url: "/Manage/Teacher/SaveImg",//后台controller的请求路径
+                type: 'post',
+                dataType: "json",
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    var img = data;
+                    var teacher = {
+                        Name: $("#name").val(),
+                        Img: img,
+                        Describe: $("#validationTextarea").val(),
+                        subjectID: $("#category").val()
+                    };
+                    $.post("/Manage/Teacher/Add", teacher, function (result) {
+                        if (result > 0) {
+                            layer.msg('添加成功!', { icon: 1, time: 1000 });
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+                        }
+                        else {
+                            layer.msg('添加失败,请联系管理员!', { icon: 2, time: 1000 });
+                        }
+                    })
+
+
+                }
+            });
+        })
+    })
+
+    function Update(id) {
+        model();
+        $.get("/Manage/Teacher/Update/" + id, function (data) {
+            var json = JSON.parse(data);
+            console.log(json);
+            $("#name").val(json.Data.Name);
+            $("#validationTextarea").val(json.Data.Describe),
+            $("#submit").text("修改");
+            $("#exampleModalGridTitle").text("修改教师信息");
+            var categoryData = $("#CategoryData").val();
+            var res = JSON.parse(categoryData);
+            console.log(res)
+            var select = "";
+            for (var i = 0; i < res.length; i++) {
+                select += `<option value="${res[i].ID}" ${res[i].SubjectName == json.Data.Subject ? "selected" : ""}>${res[i].SubjectName}</option>`
+            }
+            $("#category").append(select);
+            $('#exampleModalGrid').modal().show();
+            $("#submit").click(function () {
+                var file = $("#exampleFormControlFile1")[0].files[0];
+                var formData = new FormData();
+                formData.append("crowd_file", $("#exampleFormControlFile1")[0].files[0]);//将获取到的图片文件值保存到formData对象中，是以键值对的形式保存的，crowd_file就是键，$('#fileUp')[0].files[0]就是值
+                $.ajax({
+                    url: "/Manage/Teacher/SaveImg",//后台controller的请求路径
+                    type: 'post',
+                    dataType: "json",
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (imgname) {
+                        var teacher = {
+                            ID: id,
+                            Name: $("#name").val(),
+                            Img: imgname,
+                            Describe: $("#validationTextarea").val(),
+                            subjectID: $("#category").val()
+                        };
+                        $.post("/Manage/Teacher/Update/" + id, teacher, function (result) {
+                            if (result > 0) {
+                                layer.msg('修改成功!', { icon: 1, time: 1000 });
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000)
+                            }
+                            else {
+                                layer.msg('修改失败,请联系管理员!', { icon: 2, time: 1000 });
+                            }
+                        })
+
+
+                    }
+                });
+            })
+
+
+
+
+
+        })
+    }
+
+
+
+    function model() {
+        var md = `<div class="modal fade" id="exampleModalGrid" tabindex="-1" role="dialog" aria-labelledby="exampleModalGridTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalGridTitle">添加教师信息</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                         <div class="form-group col-md-12">
+                                <label for="name">姓名</label>
+                                <input type="text" class="form-control" id="name" placeholder="请输入教师姓名" autocomplete="off" value="">
+                            </div>
+                                <div class="form-group">
+                                <label for="exampleFormControlFile1">上传教师照片</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+                            <div class="row">
+                            <label for="validationTextarea">描述</label>
+                            <textarea class="form-control" id="validationTextarea" placeholder="请描述教师" required></textarea>
+                        </div>
+                             <div class="form-group">
+                                <label for="category">科目</label>
+                                <select id="category" class="form-control">
+
+                                </select>
+                             </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>`;
+        $("#moda").html(md);
+    }
+</script>
