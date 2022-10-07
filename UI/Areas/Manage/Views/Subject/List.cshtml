@@ -1,0 +1,225 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>教师科目管理</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+    <meta name="author" content="yinqi">
+    <link href="~/Content/Manage/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/Content/Manage/css/style.min.css" rel="stylesheet">
+    <script src="~/Content/Manage/layui/layui.js"></script>
+</head>
+
+<body>
+    <input hidden id="subject" value="@ViewData["Subject"]" />
+    <div class="container-fluid p-t-15">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <header class="card-header"><div class="card-title"><input type="button" id="add" class="btn btn-success" name="name" value="添加" /></div></header>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>科目</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="moda">
+
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/jquery.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/popper.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="~/Content/Manage/text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="~/Content/Manage/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var recipient = button.data('whatever');
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient);
+        })
+    </script>
+    <!--示例中file选择框使用到的js，这里采用外部js，不使用该功能无需引入-->
+    <script src="~/Content/Manage/bs-custom-file-input.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+</body>
+</html>
+<script>
+    var courseClassification = $("#subject").val();
+    var list = JSON.parse(courseClassification);
+    var tr = "";
+    for (var i = 0; i < list.length; i++) {
+        tr += `<tr>
+                                        <th scope="row">${list[i].ID}</th>
+                                        <td>${list[i].SubjectName}</td>
+                                        <td>
+                                            <input type="button" onclick="Update(${list[i].ID})" class="btn btn-primary btn-sm" value="修改" />
+                                            <input type="button" onclick="Delete(${list[i].ID})" class="btn btn-danger btn-sm" value="删除" />
+                                        </td>
+                                    </tr>`;
+    }
+    $("#tbody").html(tr);
+    $("#add").click(function () {
+        $("#exampleModalGridTitle").text("添加科目");
+        model();
+        $('#exampleModalGrid').modal().show();
+        $("#submit").click(function () {
+            var name = $("#name").val();
+            for (var i = 0; i < list.length; i++) {
+                if (name == list[i].SubjectName) {
+                    layer.msg('该科目已存在!', { icon: 2, time: 1000 });
+                    return;
+                }
+            }
+            if (name.length <= 0) {
+                layer.msg('科目名不能为空!', { icon: 2, time: 1000 });
+                return;
+            }
+            var subject = {
+                SubjectName: name,
+            };
+            $.post("/Manage/Subject/Add", subject, function (result) {
+                if (result > 0) {
+                    layer.msg('添加成功!', { icon: 1, time: 1000 });
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000)
+                }
+                else {
+                    layer.msg('添加失败,请联系管理员!', { icon: 2, time: 1000 });
+                }
+            })
+        })
+    })
+
+
+
+    function Update(id) {
+        model();
+        $('#exampleModalGrid').modal().show();
+        $.get("/Manage/Subject/Update/" + id, function (data) {
+            var find = JSON.parse(data);
+            $("#name").val(find.Data.SubjectName);
+        })
+        $("#submit").text("修改");
+        $("#exampleModalGridTitle").text("修改科目");
+        $("#submit").click(function () {
+            var name = $("#name").val();
+            for (var i = 0; i < list.length; i++) {
+                if (name == list[i].SubjectName) {
+                    layer.msg('该科目已存在!', { icon: 2, time: 1000 });
+                    return;
+                }
+            }
+            if (name.length <= 0) {
+                layer.msg('科目名不能为空!', { icon: 2, time: 1000 });
+                return;
+            }
+            var subject = {
+                ID: id,
+                SubjectName: name,
+            };
+            $.post("/Manage/Subject/Update", subject, function (result) {
+                if (result > 0) {
+                    layer.msg('修改成功!', { icon: 1, time: 1000 });
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000)
+                }
+                else {
+                    layer.msg('修改失败,请联系管理员!', { icon: 2, time: 1000 });
+                }
+            })
+        })
+    }
+
+
+
+
+
+
+    function Delete(id) {
+        $.get("/Manage/Subject/Delete/" + id, function (result) {
+            if (result > 0) {
+                layer.msg('删除成功!', { icon: 1, time: 1000 });
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            }
+            else {
+                layer.msg('删除失败,请联系管理员!', { icon: 2, time: 1000 });
+            }
+        })
+    }
+
+
+
+
+    function model() {
+        var md = `<div class="modal fade" id="exampleModalGrid" tabindex="-1" role="dialog" aria-labelledby="exampleModalGridTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalGridTitle">添加科目</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="name">科目</label>
+                                <input type="text" class="form-control" id="name" placeholder="请输入科目名" autocomplete="off" value="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>`;
+        $("#moda").html(md);
+    }
+</script>

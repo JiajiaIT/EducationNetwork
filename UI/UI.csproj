@@ -125,9 +125,12 @@
     <Compile Include="Areas\Manage\Controllers\BaseController.cs" />
     <Compile Include="Areas\Manage\Controllers\ClassScheduleController.cs" />
     <Compile Include="Areas\Manage\Controllers\CourseClassificationController.cs" />
+    <Compile Include="Areas\Manage\Controllers\InfoCategoryController.cs" />
+    <Compile Include="Areas\Manage\Controllers\InfoController.cs" />
     <Compile Include="Areas\Manage\Controllers\MessageController.cs" />
     <Compile Include="Areas\Manage\Controllers\StudentWorksCategoryController.cs" />
     <Compile Include="Areas\Manage\Controllers\StudentWorksController.cs" />
+    <Compile Include="Areas\Manage\Controllers\SubjectController.cs" />
     <Compile Include="Areas\Manage\Controllers\TeacherController.cs" />
     <Compile Include="Areas\Manage\ManageAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -483,6 +486,9 @@
     <Content Include="Areas\Manage\Views\StudentWorks\List.cshtml" />
     <Content Include="Areas\Manage\Views\StudentWorksCategory\List.cshtml" />
     <Content Include="Areas\Manage\Views\Teacher\List.cshtml" />
+    <Content Include="Areas\Manage\Views\Subject\List.cshtml" />
+    <Content Include="Areas\Manage\Views\Info\List.cshtml" />
+    <Content Include="Areas\Manage\Views\InfoCategory\List.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -514,6 +520,7 @@
     <Folder Include="Areas\Manage\Models\" />
     <Folder Include="Areas\Manage\Views\Base\" />
     <Folder Include="Areas\Manage\Views\Shared\" />
+    <Folder Include="Content\InfoImg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

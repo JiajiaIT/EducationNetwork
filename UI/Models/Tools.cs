@@ -16,5 +16,6 @@ namespace UI.Models
         public static string ClassScheduleImg = ConfigurationManager.AppSettings["ClassScheduleImg"].ToString();
         public static string StudentWorksImg = ConfigurationManager.AppSettings["StudentWorksImg"].ToString();
         public static string TeacherImg = ConfigurationManager.AppSettings["TeacherImg"].ToString();
+        public static string InfoImg = ConfigurationManager.AppSettings["InfoImg"].ToString();
     }
 }

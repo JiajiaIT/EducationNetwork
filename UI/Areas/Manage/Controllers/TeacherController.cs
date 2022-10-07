@@ -8,7 +8,7 @@ using UI.Models;
 
 namespace UI.Areas.Manage.Controllers
 {
-    public class TeacherController : Controller
+    public class TeacherController : BaseController
     {
         // GET: Manage/Teacher
         public ActionResult List()
